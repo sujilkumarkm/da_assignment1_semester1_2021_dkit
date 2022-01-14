@@ -1,0 +1,203 @@
+Listing all unique poll takers in the available list
+
+sujilkumarkm=> SELECT distinct poll_taker from pollster;
+    poll_taker
+------------------
+ Harris
+ Big
+ Public
+ Rasmussen
+ ARG
+ Pew
+ NBC/WSJ
+ USA
+ CNN
+ Franklin
+ Democracy
+ Time
+ ABC/Post
+ IBD/TIPP
+ FOX
+ Reuters/Zogby
+ AP/Yahoo/KN
+ Newsweek
+ DailyKos.com
+ Quinnipiac
+ Zogby
+ Economist/YouGov
+ WNBC/Marist
+ Times/Bloomberg
+ Gallup
+ GWU
+ AP-Gfk
+ InsiderAdvantage
+ Marist
+ CBS/Times
+ ABC/USA
+ CBS
+ Diageo/Hotline
+ Ipsos/McClatchy
+
+
+(34 rows)
+
+
+----------------------------------------------------------------------------------------------------
+
+Selecting count of each poll taker , how many polls from them available in the dataset
+
+sujilkumarkm=> SELECT distinct count(*),poll_taker from pollster group by poll_taker;
+ count |    poll_taker
+-------+------------------
+     3 | CNN
+     4 | Ipsos/McClatchy
+     4 | Democracy
+     5 | Zogby
+     2 | AP/Yahoo/KN
+     2 | AP-Gfk
+     1 | Newsweek
+    12 | Rasmussen
+     3 | GWU
+     1 | Reuters/Zogby
+     1 | Franklin
+     2 | CBS/Times
+     1 | ABC/USA
+     1 | Harris
+     2 | FOX
+     1 | Quinnipiac
+     8 | DailyKos.com
+     2 | Pew
+     1 | USA
+    10 | Gallup
+     1 | Marist
+     1 | Time
+     1 | InsiderAdvantage
+     1 | Public
+     3 | ABC/Post
+     1 | WNBC/Marist
+     1 | Big
+     3 | CBS
+     1 | Times/Bloomberg
+     5 | Economist/YouGov
+    10 | Diageo/Hotline
+     1 | IBD/TIPP
+     2 | NBC/WSJ
+     5 | ARG
+(34 rows)
+
+-------------------------------------------------------------------------------------------------------------------------------
+sujilkumarkm=> create table analysis as (SELECT vote_id,poll_taker,obama,macain, GREATEST(macain, obama) as winner_vote FROM votes inner join pollster on pollster.id = votes.vote_id order by vote_id)
+;
+SELECT 102
+sujilkumarkm=> select t.*,  case greatest(obama, macain) when obama then 'obama' when macain then 'macain' end as winner_name from analysis t;
+ vote_id |    poll_taker    | obama | macain | winner_vote | winner_name
+---------+------------------+-------+--------+-------------+-------------
+       1 | Rasmussen        |    49 |     46 |          49 | obama
+       2 | Zogby            |    45 |     47 |          47 | macain
+       3 | Diageo/Hotline   |    48 |     39 |          48 | obama
+       4 | CBS              |    48 |     40 |          48 | obama
+       5 | CNN              |    49 |     48 |          49 | obama
+       6 | Rasmussen        |    51 |     45 |          51 | obama
+       7 | ARG              |    49 |     43 |          49 | obama
+       8 | AP/Yahoo/KN      |    40 |     36 |          40 | obama
+       9 | Gallup           |    49 |     42 |          49 | obama
+      10 | Economist/YouGov |    42 |     39 |          42 | obama
+      11 | CBS              |    42 |     42 |          42 | obama
+      12 | Democracy        |    49 |     44 |          49 | obama
+      13 | Rasmussen        |    48 |     46 |          48 | obama
+      14 | Diageo/Hotline   |    46 |     40 |          46 | obama
+      15 | Gallup           |    45 |     48 |          48 | macain
+      16 | IBD/TIPP         |    45 |     40 |          45 | obama
+      17 | Zogby            |    46 |     50 |          50 | macain
+      18 | Rasmussen        |    47 |     48 |          48 | macain
+      19 | ABC/Post         |    47 |     49 |          49 | macain
+      20 | CNN              |    48 |     48 |          48 | obama
+      21 | USA              |    44 |     54 |          54 | macain
+      22 | Public           |    43 |     46 |          46 | macain
+      23 | NBC/WSJ          |    47 |     46 |          47 | obama
+      24 | ARG              |    47 |     46 |          47 | obama
+      25 | Ipsos/McClatchy  |    45 |     46 |          46 | macain
+      26 | InsiderAdvantage |    46 |     46 |          46 | obama
+      27 | Diageo/Hotline   |    45 |     45 |          45 | obama
+      28 | Gallup           |    43 |     48 |          48 | macain
+      29 | Economist/YouGov |    41 |     40 |          41 | obama
+      30 | AP-Gfk           |    44 |     48 |          48 | macain
+      31 | FOX              |    42 |     45 |          45 | macain
+      32 | Rasmussen        |    48 |     48 |          48 | obama
+      33 | DailyKos.com     |    47 |     45 |          47 | obama
+      34 | Democracy        |    46 |     48 |          48 | macain
+      35 | AP/Yahoo/KN      |    40 |     41 |          41 | macain
+      36 | Newsweek         |    46 |     46 |          46 | obama
+      37 | Diageo/Hotline   |    44 |     45 |          45 | macain
+      38 | Gallup           |    45 |     47 |          47 | macain
+      39 | Rasmussen        |    47 |     50 |          50 | macain
+      40 | Reuters/Zogby    |    47 |     45 |          47 | obama
+      41 | DailyKos.com     |    47 |     45 |          47 | obama
+      42 | Pew              |    46 |     46 |          46 | obama
+      43 | ABC/USA          |    47 |     45 |          47 | obama
+      44 | Ipsos/McClatchy  |    45 |     45 |          45 | obama
+      45 | Diageo/Hotline   |    46 |     42 |          46 | obama
+      46 | Gallup           |    46 |     47 |          47 | macain
+      47 | ARG              |    45 |     48 |          48 | macain
+      48 | Quinnipiac       |    49 |     45 |          49 | obama
+      49 | CBS/Times        |    49 |     44 |          49 | obama
+      50 | GWU              |    45 |     47 |          47 | macain
+      51 | Rasmussen        |    47 |     48 |          48 | macain
+      52 | DailyKos.com     |    48 |     44 |          48 | obama
+      53 | Economist/YouGov |    43 |     45 |          45 | macain
+      54 | Big              |    46 |     45 |          46 | obama
+      55 | Diageo/Hotline   |    45 |     44 |          45 | obama
+      56 | Gallup           |    49 |     44 |          49 | obama
+      57 | NBC/WSJ          |    48 |     46 |          48 | obama
+      58 | DailyKos.com     |    50 |     42 |          50 | obama
+      59 | Rasmussen        |    48 |     47 |          48 | obama
+      60 | Franklin         |    45 |     47 |          47 | macain
+      61 | Harris           |    47 |     46 |          47 | obama
+      62 | Zogby            |    47 |     43 |          47 | obama
+      63 | CNN              |    51 |     47 |          51 | obama
+      64 | Gallup           |    48 |     44 |          48 | obama
+      65 | Diageo/Hotline   |    47 |     42 |          47 | obama
+      66 | Ipsos/McClatchy  |    44 |     43 |          44 | obama
+      67 | Times/Bloomberg  |    49 |     45 |          49 | obama
+      68 | ABC/Post         |    52 |     43 |          52 | obama
+      69 | ARG              |    48 |     46 |          48 | obama
+      70 | Rasmussen        |    48 |     48 |          48 | obama
+      71 | DailyKos.com     |    49 |     43 |          49 | obama
+      72 | GWU              |    47 |     48 |          48 | macain
+      73 | WNBC/Marist      |    47 |     43 |          47 | obama
+      74 | FOX              |    45 |     39 |          45 | obama
+      75 | CBS/Times        |    48 |     43 |          48 | obama
+      76 | Economist/YouGov |    46 |     43 |          46 | obama
+      77 | Gallup           |    46 |     46 |          46 | obama
+      78 | Democracy        |    47 |     44 |          47 | obama
+      79 | Diageo/Hotline   |    47 |     43 |          47 | obama
+      80 | DailyKos.com     |    48 |     43 |          48 | obama
+      81 | Rasmussen        |    50 |     45 |          50 | obama
+      82 | Zogby            |    44 |     46 |          46 | macain
+      83 | Gallup           |    50 |     42 |          50 | obama
+      84 | Diageo/Hotline   |    47 |     42 |          47 | obama
+      85 | Zogby            |    47 |     46 |          47 | obama
+      86 | Rasmussen        |    50 |     45 |          50 | obama
+      87 | DailyKos.com     |    51 |     42 |          51 | obama
+      88 | GWU              |    48 |     46 |          48 | obama
+      89 | Ipsos/McClatchy  |    46 |     42 |          46 | obama
+      90 | Time             |    50 |     43 |          50 | obama
+      91 | Economist/YouGov |    47 |     42 |          47 | obama
+      92 | Pew              |    49 |     43 |          49 | obama
+      93 | ABC/Post         |    50 |     46 |          50 | obama
+      94 | ARG              |    49 |     45 |          49 | obama
+      95 | CBS              |    50 |     41 |          50 | obama
+      96 | AP-Gfk           |    48 |     41 |          48 | obama
+      97 | Marist           |    49 |     44 |          49 | obama
+      98 | Gallup           |    48 |     44 |          48 | obama
+      99 | Democracy        |    49 |     45 |          49 | obama
+     100 | Diageo/Hotline   |    47 |     42 |          47 | obama
+     101 | Rasmussen        |    51 |     44 |          51 | obama
+     102 | DailyKos.com     |    51 |     40 |          51 | obama
+(102 rows)
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+

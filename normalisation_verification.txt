@@ -1,0 +1,507 @@
+Details of the normalisation is given below
+
+Question i(README.txt)
+
+I am trying to see which poll taker is supporting obama and macain
+
+sujilkumarkm=> create table analysis as (SELECT vote_id,poll_taker,obama,macain, GREATEST(macain, obama) as winner_vote FROM votes inner join pollster on pollster.id = votes.vote_id order by vote_id)
+;
+SELECT 102
+sujilkumarkm=> select t.*,  case greatest(obama, macain) when obama then 'obama' when macain then 'macain' end as winner_name from analysis t;
+ vote_id |    poll_taker    | obama | macain | winner_vote | winner_name
+---------+------------------+-------+--------+-------------+-------------
+       1 | Rasmussen        |    49 |     46 |          49 | obama
+       2 | Zogby            |    45 |     47 |          47 | macain
+       3 | Diageo/Hotline   |    48 |     39 |          48 | obama
+       4 | CBS              |    48 |     40 |          48 | obama
+       5 | CNN              |    49 |     48 |          49 | obama
+       6 | Rasmussen        |    51 |     45 |          51 | obama
+       7 | ARG              |    49 |     43 |          49 | obama
+       8 | AP/Yahoo/KN      |    40 |     36 |          40 | obama
+       9 | Gallup           |    49 |     42 |          49 | obama
+      10 | Economist/YouGov |    42 |     39 |          42 | obama
+      11 | CBS              |    42 |     42 |          42 | obama
+      12 | Democracy        |    49 |     44 |          49 | obama
+      13 | Rasmussen        |    48 |     46 |          48 | obama
+      14 | Diageo/Hotline   |    46 |     40 |          46 | obama
+      15 | Gallup           |    45 |     48 |          48 | macain
+      16 | IBD/TIPP         |    45 |     40 |          45 | obama
+      17 | Zogby            |    46 |     50 |          50 | macain
+      18 | Rasmussen        |    47 |     48 |          48 | macain
+      19 | ABC/Post         |    47 |     49 |          49 | macain
+      20 | CNN              |    48 |     48 |          48 | obama
+      21 | USA              |    44 |     54 |          54 | macain
+      22 | Public           |    43 |     46 |          46 | macain
+      23 | NBC/WSJ          |    47 |     46 |          47 | obama
+      24 | ARG              |    47 |     46 |          47 | obama
+      25 | Ipsos/McClatchy  |    45 |     46 |          46 | macain
+      26 | InsiderAdvantage |    46 |     46 |          46 | obama
+      27 | Diageo/Hotline   |    45 |     45 |          45 | obama
+      28 | Gallup           |    43 |     48 |          48 | macain
+      29 | Economist/YouGov |    41 |     40 |          41 | obama
+      30 | AP-Gfk           |    44 |     48 |          48 | macain
+      31 | FOX              |    42 |     45 |          45 | macain
+      32 | Rasmussen        |    48 |     48 |          48 | obama
+      33 | DailyKos.com     |    47 |     45 |          47 | obama
+      34 | Democracy        |    46 |     48 |          48 | macain
+      35 | AP/Yahoo/KN      |    40 |     41 |          41 | macain
+      36 | Newsweek         |    46 |     46 |          46 | obama
+      37 | Diageo/Hotline   |    44 |     45 |          45 | macain
+      38 | Gallup           |    45 |     47 |          47 | macain
+      39 | Rasmussen        |    47 |     50 |          50 | macain
+      40 | Reuters/Zogby    |    47 |     45 |          47 | obama
+      41 | DailyKos.com     |    47 |     45 |          47 | obama
+      42 | Pew              |    46 |     46 |          46 | obama
+      43 | ABC/USA          |    47 |     45 |          47 | obama
+      44 | Ipsos/McClatchy  |    45 |     45 |          45 | obama
+      45 | Diageo/Hotline   |    46 |     42 |          46 | obama
+      46 | Gallup           |    46 |     47 |          47 | macain
+      47 | ARG              |    45 |     48 |          48 | macain
+      48 | Quinnipiac       |    49 |     45 |          49 | obama
+      49 | CBS/Times        |    49 |     44 |          49 | obama
+      50 | GWU              |    45 |     47 |          47 | macain
+      51 | Rasmussen        |    47 |     48 |          48 | macain
+      52 | DailyKos.com     |    48 |     44 |          48 | obama
+      53 | Economist/YouGov |    43 |     45 |          45 | macain
+      54 | Big              |    46 |     45 |          46 | obama
+      55 | Diageo/Hotline   |    45 |     44 |          45 | obama
+      56 | Gallup           |    49 |     44 |          49 | obama
+      57 | NBC/WSJ          |    48 |     46 |          48 | obama
+      58 | DailyKos.com     |    50 |     42 |          50 | obama
+      59 | Rasmussen        |    48 |     47 |          48 | obama
+      60 | Franklin         |    45 |     47 |          47 | macain
+      61 | Harris           |    47 |     46 |          47 | obama
+      62 | Zogby            |    47 |     43 |          47 | obama
+      63 | CNN              |    51 |     47 |          51 | obama
+      64 | Gallup           |    48 |     44 |          48 | obama
+      65 | Diageo/Hotline   |    47 |     42 |          47 | obama
+      66 | Ipsos/McClatchy  |    44 |     43 |          44 | obama
+      67 | Times/Bloomberg  |    49 |     45 |          49 | obama
+      68 | ABC/Post         |    52 |     43 |          52 | obama
+      69 | ARG              |    48 |     46 |          48 | obama
+      70 | Rasmussen        |    48 |     48 |          48 | obama
+      71 | DailyKos.com     |    49 |     43 |          49 | obama
+      72 | GWU              |    47 |     48 |          48 | macain
+      73 | WNBC/Marist      |    47 |     43 |          47 | obama
+      74 | FOX              |    45 |     39 |          45 | obama
+      75 | CBS/Times        |    48 |     43 |          48 | obama
+      76 | Economist/YouGov |    46 |     43 |          46 | obama
+      77 | Gallup           |    46 |     46 |          46 | obama
+      78 | Democracy        |    47 |     44 |          47 | obama
+      79 | Diageo/Hotline   |    47 |     43 |          47 | obama
+      80 | DailyKos.com     |    48 |     43 |          48 | obama
+      81 | Rasmussen        |    50 |     45 |          50 | obama
+      82 | Zogby            |    44 |     46 |          46 | macain
+      83 | Gallup           |    50 |     42 |          50 | obama
+      84 | Diageo/Hotline   |    47 |     42 |          47 | obama
+      85 | Zogby            |    47 |     46 |          47 | obama
+      86 | Rasmussen        |    50 |     45 |          50 | obama
+      87 | DailyKos.com     |    51 |     42 |          51 | obama
+      88 | GWU              |    48 |     46 |          48 | obama
+      89 | Ipsos/McClatchy  |    46 |     42 |          46 | obama
+      90 | Time             |    50 |     43 |          50 | obama
+      91 | Economist/YouGov |    47 |     42 |          47 | obama
+      92 | Pew              |    49 |     43 |          49 | obama
+      93 | ABC/Post         |    50 |     46 |          50 | obama
+      94 | ARG              |    49 |     45 |          49 | obama
+      95 | CBS              |    50 |     41 |          50 | obama
+      96 | AP-Gfk           |    48 |     41 |          48 | obama
+      97 | Marist           |    49 |     44 |          49 | obama
+      98 | Gallup           |    48 |     44 |          48 | obama
+      99 | Democracy        |    49 |     45 |          49 | obama
+     100 | Diageo/Hotline   |    47 |     42 |          47 | obama
+     101 | Rasmussen        |    51 |     44 |          51 | obama
+     102 | DailyKos.com     |    51 |     40 |          51 | obama
+(102 rows)
+
+
+
+I tried to understand poll taker infrormation through above method which did not work well for me.
+--------------------------------------------------------------------------------------------------
+
+create table analysis as (select case greatest(obama, macain) when obama then 'obama' when macain then 'macain' end as winner_name,id,poll_taker from votes t inner join pollster on pollster.id = t.vote_id order by vote_id);
+SELECT 102km=>
+sujilkumarkm=> \d analysis
+                     Table "public.analysis"
+   Column    |       Type        | Collation | Nullable | Default
+-------------+-------------------+-----------+----------+---------
+ winner_name | text              |           |          |
+ id          | bigint            |           |          |
+ poll_taker  | character varying |           |          |
+sujilkumarkm=>
+sujilkumarkm=> select * from analysis;
+
+ winner_name | id  |    poll_taker
+-------------+-----+------------------
+ obama       |   1 | Rasmussen
+ macain      |   2 | Zogby
+ obama       |   3 | Diageo/Hotline
+ obama       |   4 | CBS
+ obama       |   5 | CNN
+ obama       |   6 | Rasmussen
+ obama       |   7 | ARG
+ obama       |   8 | AP/Yahoo/KN
+ obama       |   9 | Gallup
+ obama       |  10 | Economist/YouGov
+ obama       |  11 | CBS
+ obama       |  12 | Democracy
+ obama       |  13 | Rasmussen
+ obama       |  14 | Diageo/Hotline
+ macain      |  15 | Gallup
+ obama       |  16 | IBD/TIPP
+ macain      |  17 | Zogby
+ macain      |  18 | Rasmussen
+ macain      |  19 | ABC/Post
+ obama       |  20 | CNN
+ macain      |  21 | USA
+ macain      |  22 | Public
+ obama       |  23 | NBC/WSJ
+ obama       |  24 | ARG
+ macain      |  25 | Ipsos/McClatchy
+ obama       |  26 | InsiderAdvantage
+ obama       |  27 | Diageo/Hotline
+ macain      |  28 | Gallup
+ obama       |  29 | Economist/YouGov
+ macain      |  30 | AP-Gfk
+ macain      |  31 | FOX
+ obama       |  32 | Rasmussen
+ obama       |  33 | DailyKos.com
+ macain      |  34 | Democracy
+ macain      |  35 | AP/Yahoo/KN
+ obama       |  36 | Newsweek
+ macain      |  37 | Diageo/Hotline
+ macain      |  38 | Gallup
+ macain      |  39 | Rasmussen
+ obama       |  40 | Reuters/Zogby
+ obama       |  41 | DailyKos.com
+ obama       |  42 | Pew
+ obama       |  43 | ABC/USA
+ obama       |  44 | Ipsos/McClatchy
+ obama       |  45 | Diageo/Hotline
+ macain      |  46 | Gallup
+ macain      |  47 | ARG
+ obama       |  48 | Quinnipiac
+ obama       |  49 | CBS/Times
+ macain      |  50 | GWU
+ macain      |  51 | Rasmussen
+ obama       |  52 | DailyKos.com
+ macain      |  53 | Economist/YouGov
+ obama       |  54 | Big
+ obama       |  55 | Diageo/Hotline
+ obama       |  56 | Gallup
+ obama       |  57 | NBC/WSJ
+ obama       |  58 | DailyKos.com
+ obama       |  59 | Rasmussen
+ macain      |  60 | Franklin
+ obama       |  61 | Harris
+ obama       |  62 | Zogby
+ obama       |  63 | CNN
+ obama       |  64 | Gallup
+ obama       |  65 | Diageo/Hotline
+ obama       |  66 | Ipsos/McClatchy
+ obama       |  67 | Times/Bloomberg
+ obama       |  68 | ABC/Post
+ obama       |  69 | ARG
+ obama       |  70 | Rasmussen
+ obama       |  71 | DailyKos.com
+ macain      |  72 | GWU
+ obama       |  73 | WNBC/Marist
+ obama       |  74 | FOX
+ obama       |  75 | CBS/Times
+ obama       |  76 | Economist/YouGov
+ obama       |  77 | Gallup
+ obama       |  78 | Democracy
+ obama       |  79 | Diageo/Hotline
+ obama       |  80 | DailyKos.com
+ obama       |  81 | Rasmussen
+ macain      |  82 | Zogby
+ obama       |  83 | Gallup
+ obama       |  84 | Diageo/Hotline
+ obama       |  85 | Zogby
+ obama       |  86 | Rasmussen
+ obama       |  87 | DailyKos.com
+ obama       |  88 | GWU
+ obama       |  89 | Ipsos/McClatchy
+ obama       |  90 | Time
+ obama       |  91 | Economist/YouGov
+ obama       |  92 | Pew
+ obama       |  93 | ABC/Post
+ obama       |  94 | ARG
+ obama       |  95 | CBS
+ obama       |  96 | AP-Gfk
+ obama       |  97 | Marist
+ obama       |  98 | Gallup
+ obama       |  99 | Democracy
+ obama       | 100 | Diageo/Hotline
+ obama       | 101 | Rasmussen
+ obama       | 102 | DailyKos.com
+(102 rows)
+
+
+sujilkumarkm=> select poll_taker from analysis where winner_name = 'obama';
+    poll_taker
+------------------
+ Rasmussen
+ Diageo/Hotline
+ CBS
+ CNN
+ Rasmussen
+ ARG
+ AP/Yahoo/KN
+ Gallup
+ Economist/YouGov
+ CBS
+ Democracy
+ Rasmussen
+ Diageo/Hotline
+ IBD/TIPP
+ CNN
+ NBC/WSJ
+ ARG
+ InsiderAdvantage
+ Diageo/Hotline
+ Economist/YouGov
+ Rasmussen
+ DailyKos.com
+ Newsweek
+ Reuters/Zogby
+ DailyKos.com
+ Pew
+ ABC/USA
+ Ipsos/McClatchy
+ Diageo/Hotline
+ Quinnipiac
+ CBS/Times
+ DailyKos.com
+ Big
+ Diageo/Hotline
+ Gallup
+ NBC/WSJ
+ DailyKos.com
+ Rasmussen
+ Harris
+ Zogby
+ CNN
+ Gallup
+ Diageo/Hotline
+ Ipsos/McClatchy
+ Times/Bloomberg
+ ABC/Post
+sujilkumarkm=> select distinct count(*) poll_taker from analysis where winner_name = 'obama';
+ poll_taker
+------------
+         78
+(1 row)
+
+                                 ^
+sujilkumarkm=> select distinct greatest(poll_taker) from analysis where winner_name = 'obama';
+     greatest
+------------------
+ Harris
+ Big
+ Rasmussen
+ ARG
+ Pew
+ NBC/WSJ
+ CNN
+ Democracy
+ Time
+ ABC/Post
+ IBD/TIPP
+ FOX
+ Reuters/Zogby
+ AP/Yahoo/KN
+ Newsweek
+ DailyKos.com
+ Quinnipiac
+ Zogby
+ Economist/YouGov
+ WNBC/Marist
+ Times/Bloomberg
+ Gallup
+ GWU
+ AP-Gfk
+ InsiderAdvantage
+ Marist
+ CBS/Times
+ ABC/USA
+ CBS
+ Diageo/Hotline
+ Ipsos/McClatchy
+(31 rows)
+
+
+------------------------------------------------------------------------------------------------------------
+sujilkumarkm=> select poll_taker from analysis where winner_name = 'macain';
+    poll_taker
+------------------
+ Zogby
+ Gallup
+ Zogby
+ Rasmussen
+ ABC/Post
+ USA
+ Public
+ Ipsos/McClatchy
+ Gallup
+ AP-Gfk
+ FOX
+ Democracy
+ AP/Yahoo/KN
+ Diageo/Hotline
+ Gallup
+ Rasmussen
+ Gallup
+ ARG
+ GWU
+ Rasmussen
+ Economist/YouGov
+ Franklin
+ GWU
+ Zogby
+(24 rows)
+
+We have above seen which poll takers are supporting both obama and maccain
+--------------------------------------------------------------------------------------------
+
+Question 2(README.txt)
+
+sujilkumarkm=> SELECT SUM (id) AS total FROM analysis;
+ total
+-------
+  5253
+(1 row)
+
+sujilkumarkm=> SELECT SUM (id) AS total FROM analysis where winner_name = 'obama';
+ total
+-------
+  4381
+(1 row)
+
+sujilkumarkm=> SELECT SUM (id) AS total FROM analysis where winner_name = 'macain';
+ total
+-------
+   872
+(1 row)
+
+
+In the above code we have seen obama got a 4381 total votes in pollster compared macain which is just 872. Question 2 from README.txt answered here.
+
+
+----------------------------------------------------------------------------------------------
+
+Question 3(README.txt)
+
+ 3. Which poll has got the highest margin ?
+
+
+sujilkumarkm=> SELECT * FROM pollster WHERE id = (SELECT vote_id FROM votes WHERE margin = (SELECT MAX(margin) FROM votes));
+ id  |  poll_taker  | participants | popul_type
+-----+--------------+--------------+------------
+ 102 | DailyKos.com | 1100         | LV
+(1 row)
+
+
+sujilkumarkm=> SELECT * FROM votes where vote_id=102;
+ vote_id | macain | obama | margin
+---------+--------+-------+--------
+     102 |     40 |    51 |     11
+(1 row)
+
+
+As per the above result it's clear that maximum margin was made by the obama and DailyKos.com was the poll taker.
+
+
+---------------------------------------------------------------------------------------------
+
+
+Question 4(README.txt)
+
+4. While winning, RV or LV (registered voters or likely voters) which one is more favorable for both obama and macain ?.
+
+sujilkumarkm=> create table pop_anl as (select analysis.id,popul_type,winner_name from analysis inner join pollster on pollster.id = analysis.id);
+SELECT 102
+
+
+sujilkumarkm=> select * from pop_anl limit 5;
+ id | popul_type | winner_name
+----+------------+-------------
+  1 | LV         | obama
+  2 | LV         | macain
+  3 | RV         | obama
+  4 | RV         | obama
+  5 | RV         | obama
+(5 rows)
+
+sujilkumarkm=> select max(popul_type) from pop_anl where winner_name = 'obama';
+ max
+-----
+ RV
+(1 row)
+
+So from the above results it's visible that obama got most of the time support from RV.
+
+
+Now let me have a look into macain supporter types.
+
+
+sujilkumarkm=> select max(popul_type) from pop_anl where winner_name = 'macain';
+ max
+-----
+ RV
+(1 row)
+
+
+It's clear from the results that macain also most of this support from LV while he wins.
+
+
+--------------------------------------------------------------------------------------------
+
+
+sujilkumarkm=> SELECT vote_id, obama, macain, avg(macain) OVER () FROM votes limit 5;
+ vote_id | obama | macain |         avg
+---------+-------+--------+---------------------
+       1 |    49 |     46 | 44.5980392156862745
+       2 |    45 |     47 | 44.5980392156862745
+       3 |    48 |     39 | 44.5980392156862745
+       4 |    48 |     40 | 44.5980392156862745
+       5 |    49 |     48 | 44.5980392156862745
+(5 rows)
+
+sujilkumarkm=> SELECT vote_id, obama, macain, avg(obama) OVER () FROM votes limit 5;
+ vote_id | obama | macain |         avg
+---------+-------+--------+---------------------
+       1 |    49 |     46 | 46.9215686274509804
+       2 |    45 |     47 | 46.9215686274509804
+       3 |    48 |     39 | 46.9215686274509804
+       4 |    48 |     40 | 46.9215686274509804
+
+
+Usinng window function average vote % has been calculated.
+
+
+
+sujilkumarkm=> SELECT popul_type FROM pollster GROUP BY popul_type;
+ popul_type
+------------
+ RV
+ AD
+ LV
+(3 rows)
+
+
+Just used group by to get 3 different sample names from dataset.
+
+
+
+
+
+
+
+
+
+
+
+
+
+. 
